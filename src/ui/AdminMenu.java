@@ -16,25 +16,32 @@ public class AdminMenu extends JFrame {
         this.userList = userList;
 
         setTitle("Admin Menu");
-        setSize(400, 250);
+        setSize(400, 300); 
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLayout(new GridLayout(2, 1, 10, 10));
+        setLayout(new GridLayout(3, 1, 10, 10)); 
 
         JButton manageMoviesBtn = new JButton("Manage Movie");
         JButton viewRevenueBtn = new JButton("View Revenue");
+        JButton exitBtn = new JButton("Exit");
 
         manageMoviesBtn.addActionListener(e -> {
-            this.dispose();  // Close Admin Menu window
+            this.dispose();
             new ManageMovieWindow(movieList, userList).setVisible(true);
         });
 
         viewRevenueBtn.addActionListener(e -> {
-            this.dispose();  // Close Admin Menu window
-            new ViewRevenueWindow(movieList).setVisible(true);
+            this.dispose();
+            new ViewRevenueWindow(movieList, userList).setVisible(true); 
+        });
+
+        exitBtn.addActionListener(e -> {
+            this.dispose();
+            new MainMenu(movieList, userList).setVisible(true);
         });
 
         add(manageMoviesBtn);
         add(viewRevenueBtn);
+        add(exitBtn);
     }
 }

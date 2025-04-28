@@ -7,9 +7,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
-
 public class CustomerMenu extends JFrame {
+    private List<Movie> movieList;
+    private List<User> userList;
+
     public CustomerMenu(List<Movie> movieList, List<User> userList) {
+        this.movieList = movieList;
+        this.userList = userList;
+
         setTitle("Customer Menu");
         setSize(400, 300);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -17,17 +22,42 @@ public class CustomerMenu extends JFrame {
         setLayout(new GridLayout(4, 1, 10, 10));
 
         JButton browseBtn = new JButton("Browse Movies");
-        JButton bookBtn = new JButton("Book a Ticket");
+        JButton viewTicketBtn = new JButton("View My Ticket");
         JButton manageProfileBtn = new JButton("Manage Profile");
         JButton exitBtn = new JButton("Exit");
 
-        browseBtn.addActionListener(e -> new BrowseMoviesWindow(movieList).setVisible(true));
-        bookBtn.addActionListener(e -> new BookTicketWindow(movieList, userList).setVisible(true));
-        manageProfileBtn.addActionListener(e -> new ManageProfileWindow(userList).setVisible(true));
+        browseBtn.addActionListener(e -> {
+            this.dispose();  
+            new BrowseMoviesWindow(movieList, userList).setVisible(true);
+        });
+
+        viewTicketBtn.addActionListener(e -> {
+            String email = JOptionPane.showInputDialog(this, "Enter your email to view ticket:");
+            if (email != null) {
+                User currentUser = userList.stream()
+                        .filter(u -> u.getEmail().equalsIgnoreCase(email))
+                        .findFirst()
+                        .orElse(null);
+        
+                if (currentUser != null) {
+                    this.dispose();  
+                    CustomerViewTicket.openTicket(movieList, userList, currentUser);
+                } else {
+                    JOptionPane.showMessageDialog(this, "User not found.");
+                }
+            }
+        });
+        
+
+        manageProfileBtn.addActionListener(e -> {
+            this.dispose();  
+            new ManageProfileWindow(userList).setVisible(true);
+        });
+        
         exitBtn.addActionListener(e -> dispose());
 
         add(browseBtn);
-        add(bookBtn);
+        add(viewTicketBtn);
         add(manageProfileBtn);
         add(exitBtn);
     }

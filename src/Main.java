@@ -1,5 +1,3 @@
-package src;
-
 import ui.MainMenu;
 import model.Movie;
 import model.User;

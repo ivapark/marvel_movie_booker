@@ -6,6 +6,7 @@ public class Movie {
     private String title;
     private String showtime;
     private int seatsAvailable;
+    private int ticketPrice;
 
     public Movie(String title, String showtime, int seatsAvailable) {
         this.title = title;
@@ -47,6 +48,14 @@ public class Movie {
 
     public void cancelSeat() {
         seatsAvailable++;
+    }
+
+    public int getTicketPrice() {
+        return ticketPrice;
+    }
+    
+    public void setTicketPrice(int ticketPrice) {
+        this.ticketPrice = ticketPrice;
     }
 
     @Override
