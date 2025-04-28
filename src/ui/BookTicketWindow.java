@@ -36,7 +36,7 @@ public class BookTicketWindow extends JFrame {
         }
 
         setTitle("Browse Movies - Book a Ticket");
-        setSize(450, 400);
+        setSize(450, 300);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLayout(new BorderLayout(10, 10));
@@ -83,8 +83,6 @@ public class BookTicketWindow extends JFrame {
         buttonPanel.add(exitBtn);
 
         add(buttonPanel, BorderLayout.SOUTH);
-
-        // --- Behavior ---
 
         // Auto-update price when seats are entered
         seatsField.getDocument().addDocumentListener(new javax.swing.event.DocumentListener() {
@@ -140,8 +138,6 @@ public class BookTicketWindow extends JFrame {
             new BrowseMoviesWindow(movieList, userList).setVisible(true);
         });
     }
-
-    // --- Helper methods ---
 
     private void updatePrice() {
         try {

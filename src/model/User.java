@@ -1,7 +1,5 @@
 package model;
 
-import java.io.Serializable;
-
 import java.util.List;
 import java.util.ArrayList;
 
@@ -16,12 +14,33 @@ public class User {
         this.bookings = new ArrayList<>();
     }
 
-    public String getName() { return name; }
-    public String getEmail() { return email; }
-    public List<Booking> getBookings() { return bookings; }
+    public String getName() {
+        return name;
+    }
 
-    public void addBooking(Booking booking) { bookings.add(booking); }
-    public void removeBooking(Booking booking) { bookings.remove(booking); }
+    public String getEmail() {
+        return email;
+    }
+
+    public List<Booking> getBookings() {
+        return bookings;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void addBooking(Booking booking) {
+        bookings.add(booking);
+    }
+
+    public void removeBooking(Booking booking) {
+        bookings.remove(booking);
+    }
 
     @Override
     public String toString() {

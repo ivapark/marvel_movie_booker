@@ -1,75 +1,85 @@
 package ui;
 
-import model.Movie;       // For movies
-import model.User;        // If it uses users
-import model.Booking;     // If needed
+import model.Movie;
+import model.User;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel; // If using tables
 import java.awt.*;
 import java.util.List;
 
-
-
 public class ManageProfileWindow extends JFrame {
-    public ManageProfileWindow(List<User> userList) {
+    private List<Movie> movieList;
+    private List<User> userList;
+    private User currentUser;
+
+    private JTextField nameField;
+    private JTextField emailField;
+
+    public ManageProfileWindow(List<Movie> movieList, List<User> userList, User currentUser) {
+        this.movieList = movieList;
+        this.userList = userList;
+        this.currentUser = currentUser;
+
         setTitle("Manage Profile");
-        setSize(400, 250);
+        setSize(400, 300);
         setLocationRelativeTo(null);
-        setLayout(new GridLayout(5, 2, 10, 10));
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setLayout(new BorderLayout(10, 10));
 
-        JLabel nameLabel = new JLabel("Name:");
-        JTextField nameField = new JTextField();
+        JLabel heading = new JLabel("My Profile", SwingConstants.CENTER);
+        heading.setFont(new Font("Arial", Font.BOLD, 16));
+        add(heading, BorderLayout.NORTH);
 
-        JLabel emailLabel = new JLabel("Email:");
-        JTextField emailField = new JTextField();
+        // Center Form
+        JPanel formPanel = new JPanel(new GridLayout(2, 2, 10, 10));
 
-        JButton createBtn = new JButton("Create");
+        formPanel.add(new JLabel("Name:"));
+        nameField = new JTextField(currentUser.getName());
+        formPanel.add(nameField);
+
+        formPanel.add(new JLabel("Email:"));
+        emailField = new JTextField(currentUser.getEmail());
+        formPanel.add(emailField);
+
+        add(formPanel, BorderLayout.CENTER);
+
+        // Bottom Buttons
+        JPanel buttonPanel = new JPanel(new FlowLayout());
+
         JButton updateBtn = new JButton("Update");
         JButton deleteBtn = new JButton("Delete");
-        JButton cancelBtn = new JButton("Cancel");
+        JButton exitBtn = new JButton("Exit");
 
-        createBtn.addActionListener(e -> {
-            String name = nameField.getText();
-            String email = emailField.getText();
+        buttonPanel.add(updateBtn);
+        buttonPanel.add(deleteBtn);
+        buttonPanel.add(exitBtn);
 
-            if (userList.stream().anyMatch(u -> u.getEmail().equalsIgnoreCase(email))) {
-                JOptionPane.showMessageDialog(this, "User already exists.");
-            } else {
-                userList.add(new User(name, email));
-                JOptionPane.showMessageDialog(this, "Profile created.");
-                dispose();
-            }
-        });
+        add(buttonPanel, BorderLayout.SOUTH);
 
+        // --- Button Behaviors ---
         updateBtn.addActionListener(e -> {
-            String name = nameField.getText();
-            String email = emailField.getText();
+            String newName = nameField.getText().trim();
+            String newEmail = emailField.getText().trim();
 
-            for (User u : userList) {
-                if (u.getEmail().equalsIgnoreCase(email)) {
-                    userList.remove(u);
-                    userList.add(new User(name, email));
-                    JOptionPane.showMessageDialog(this, "Profile updated.");
-                    dispose();
-                    return;
-                }
+            if (!newName.isEmpty() && !newEmail.isEmpty()) {
+                currentUser.setName(newName);
+                currentUser.setEmail(newEmail);
+                JOptionPane.showMessageDialog(this, "Profile updated successfully.");
+            } else {
+                JOptionPane.showMessageDialog(this, "Please enter a valid name and email.");
             }
-            JOptionPane.showMessageDialog(this, "User not found.");
         });
 
         deleteBtn.addActionListener(e -> {
-            String email = emailField.getText();
-            boolean removed = userList.removeIf(u -> u.getEmail().equalsIgnoreCase(email));
-            JOptionPane.showMessageDialog(this, removed ? "Profile deleted." : "User not found.");
-            if (removed) dispose();
+            userList.remove(currentUser);
+            JOptionPane.showMessageDialog(this, "Profile deleted successfully.");
+            this.dispose();
+            new CustomerMenu(movieList, userList).setVisible(true);
         });
 
-        cancelBtn.addActionListener(e -> dispose());
-
-        add(nameLabel); add(nameField);
-        add(emailLabel); add(emailField);
-        add(createBtn); add(updateBtn);
-        add(deleteBtn); add(cancelBtn);
+        exitBtn.addActionListener(e -> {
+            this.dispose();
+            new CustomerMenu(movieList, userList).setVisible(true);
+        });
     }
 }

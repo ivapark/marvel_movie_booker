@@ -13,7 +13,6 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
-
 public class BrowseMoviesWindow extends JFrame {
     private List<Movie> movieList;
     private List<User> userList;
@@ -31,7 +30,7 @@ public class BrowseMoviesWindow extends JFrame {
         setLayout(new BorderLayout(10, 10));
 
         // Table Setup
-        String[] columns = {"Title", "Showtime", "Available Seats"};
+        String[] columns = { "Title", "Showtime", "Available Seats" };
         tableModel = new DefaultTableModel(columns, 0);
         movieTable = new JTable(tableModel);
 
@@ -76,11 +75,10 @@ public class BrowseMoviesWindow extends JFrame {
         add(bottomPanel, BorderLayout.SOUTH);
     }
 
-    
     private void populateTable() {
-        tableModel.setRowCount(0); // clear existing rows
+        tableModel.setRowCount(0); 
         for (Movie m : movieList) {
-            tableModel.addRow(new Object[]{m.getTitle(), m.getShowtime(), m.getSeatsAvailable()});
+            tableModel.addRow(new Object[] { m.getTitle(), m.getShowtime(), m.getSeatsAvailable() });
         }
     }
 
@@ -90,14 +88,14 @@ public class BrowseMoviesWindow extends JFrame {
 
     private void sortMoviesByTime() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("h:mm a");
-    
+
         Collections.sort(movieList, (m1, m2) -> {
             try {
                 LocalTime time1 = LocalTime.parse(m1.getShowtime(), formatter);
                 LocalTime time2 = LocalTime.parse(m2.getShowtime(), formatter);
                 return time1.compareTo(time2);
             } catch (DateTimeParseException e) {
-                return 0; // if parsing fails, treat as equal
+                return 0; 
             }
         });
     }

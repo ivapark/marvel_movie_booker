@@ -50,10 +50,27 @@ public class CustomerMenu extends JFrame {
         
 
         manageProfileBtn.addActionListener(e -> {
-            this.dispose();  
-            new ManageProfileWindow(userList).setVisible(true);
+            String email = JOptionPane.showInputDialog(this, "Enter your email to manage profile:");
+            if (email != null) {
+                User currentUser = userList.stream()
+                        .filter(u -> u.getEmail().equalsIgnoreCase(email))
+                        .findFirst()
+                        .orElse(null);
+        
+                if (currentUser != null) {
+                    this.dispose();
+                    new ManageProfileWindow(movieList, userList, currentUser).setVisible(true);
+                } else {
+                    JOptionPane.showMessageDialog(this, "User not found.");
+                }
+            }
         });
         
+        exitBtn.addActionListener(e -> {
+            this.dispose();
+            new MainMenu(movieList, userList).setVisible(true); 
+        });
+    
         exitBtn.addActionListener(e -> dispose());
 
         add(browseBtn);
