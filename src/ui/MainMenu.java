@@ -31,12 +31,14 @@ public class MainMenu extends JFrame {
         customerBtn.addActionListener(e -> new CustomerMenu(movieList, userList).setVisible(true));
         adminBtn.addActionListener(e -> {
             String password = JOptionPane.showInputDialog(this, "Enter Admin Password:");
-            if (Admin.authenticate(password)) {
-                new AdminMenu(movieList, userList).setVisible(true);
+            if (auth.Admin.authenticate(password)) {
+                this.dispose();  
+                new AdminMenu(movieList, userList).setVisible(true);  
             } else {
                 JOptionPane.showMessageDialog(this, "Wrong password!");
             }
         });
+        
         exitBtn.addActionListener(e -> System.exit(0));
 
         add(customerBtn);

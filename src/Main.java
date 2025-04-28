@@ -3,42 +3,32 @@ package src;
 import ui.MainMenu;
 import model.Movie;
 import model.User;
-import utils.DataManager;
 
 import javax.swing.*;
 import java.util.List;
 import java.util.ArrayList;
 
 /**
- * Entry point for the Marvel Movie Ticket Booking System.
+ * Entry point for the Marvel Ticket Booking System (pure OOP, no files).
  */
 public class Main {
     public static void main(String[] args) {
-        // Load saved movies and users
-        List<Movie> movieList = DataManager.loadMovies();
-        List<User> userList = DataManager.loadUsers();
+        // Freshly create new lists every time the program runs
+        List<Movie> movieList = new ArrayList<>();
+        List<User> userList = new ArrayList<>();
 
-        // If no movies exist, seed with sample data
-        if (movieList.isEmpty()) {
-            seedMovies(movieList);
-        }
+        // Seed some movies
+        seedMovies(movieList);
 
-        // Start the GUI on the Event Dispatch Thread
+        // Start the GUI
         SwingUtilities.invokeLater(() -> {
             MainMenu mainMenu = new MainMenu(movieList, userList);
             mainMenu.setVisible(true);
-
-            // Save data when the application closes
-            Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-                DataManager.saveMovies(movieList);
-                DataManager.saveUsers(userList);
-                System.out.println("Data saved successfully!");
-            }));
         });
     }
 
     /**
-     * Seeds the movie list with sample Marvel movies.
+     * Seeds sample Marvel movies into the movie list.
      */
     private static void seedMovies(List<Movie> movieList) {
         movieList.add(new Movie("Iron Man", "12:00 PM", 50));
