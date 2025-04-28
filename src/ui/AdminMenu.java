@@ -7,29 +7,34 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
-
-
-
 public class AdminMenu extends JFrame {
+    private List<Movie> movieList;
+    private List<User> userList;
+
     public AdminMenu(List<Movie> movieList, List<User> userList) {
+        this.movieList = movieList;
+        this.userList = userList;
+
         setTitle("Admin Menu");
-        setSize(400, 300);
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        setSize(400, 250);
         setLocationRelativeTo(null);
-        setLayout(new GridLayout(4, 1, 10, 10));
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(new GridLayout(2, 1, 10, 10));
 
-        JButton addMovieBtn = new JButton("Add Movie");
-        JButton modifyMovieBtn = new JButton("Modify Movie");
-        JButton viewUsersBtn = new JButton("View Registered Users");
-        JButton exitBtn = new JButton("Exit");
+        JButton manageMoviesBtn = new JButton("Manage Movie");
+        JButton viewRevenueBtn = new JButton("View Revenue");
 
-        addMovieBtn.addActionListener(e -> new AddMovieWindow(movieList).setVisible(true));
-        modifyMovieBtn.addActionListener(e -> new ModifyMovieWindow(movieList).setVisible(true));
-        exitBtn.addActionListener(e -> dispose());
+        manageMoviesBtn.addActionListener(e -> {
+            this.dispose();  // Close Admin Menu window
+            new ManageMovieWindow(movieList, userList).setVisible(true);
+        });
 
-        add(addMovieBtn);
-        add(modifyMovieBtn);
-        add(viewUsersBtn);
-        add(exitBtn);
+        viewRevenueBtn.addActionListener(e -> {
+            this.dispose();  // Close Admin Menu window
+            new ViewRevenueWindow(movieList).setVisible(true);
+        });
+
+        add(manageMoviesBtn);
+        add(viewRevenueBtn);
     }
 }
