@@ -1,17 +1,19 @@
 package ui;
 
-import model.Movie;       // For movies
-import model.User;        // If it uses users
-import model.Booking;     // If needed
+import model.Movie;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel; // If using tables
 import java.awt.*;
 import java.util.List;
 
-
 public class AddMovieWindow extends JFrame {
-    public AddMovieWindow(List<Movie> movieList) {
+    private List<Movie> movieList;
+    private ManageMovieWindow manageMovieWindow;
+
+    public AddMovieWindow(List<Movie> movieList, ManageMovieWindow manageMovieWindow) {
+        this.movieList = movieList;
+        this.manageMovieWindow = manageMovieWindow;
+
         setTitle("Add New Movie");
         setSize(400, 250);
         setLocationRelativeTo(null);
@@ -33,7 +35,9 @@ public class AddMovieWindow extends JFrame {
             String showtime = timeField.getText();
             try {
                 int seats = Integer.parseInt(seatsField.getText());
+
                 movieList.add(new Movie(title, showtime, seats));
+                manageMovieWindow.refreshTable();  // <-- Refresh the table after adding
                 JOptionPane.showMessageDialog(this, "Movie added successfully!");
                 dispose();
             } catch (NumberFormatException ex) {

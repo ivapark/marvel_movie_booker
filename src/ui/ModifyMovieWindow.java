@@ -1,67 +1,83 @@
 package ui;
 
-import model.Movie;       // For movies
-import model.User;        // If it uses users
-import model.Booking;     // If needed
+import model.Movie;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel; // If using tables
 import java.awt.*;
 import java.util.List;
 
-
-
 public class ModifyMovieWindow extends JFrame {
-    public ModifyMovieWindow(List<Movie> movieList) {
+    private List<Movie> movieList;
+    private ManageMovieWindow manageMovieWindow;
+    private String movieTitle;
+
+    public ModifyMovieWindow(List<Movie> movieList, ManageMovieWindow manageMovieWindow, String movieTitle) {
+        this.movieList = movieList;
+        this.manageMovieWindow = manageMovieWindow;
+        this.movieTitle = movieTitle;
+
         setTitle("Modify Movie");
         setSize(400, 250);
         setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLayout(new GridLayout(4, 2, 10, 10));
 
-        JLabel titleLabel = new JLabel("Movie to Modify:");
+        // Labels and text fields
+        JLabel titleLabel = new JLabel("New Title:");
         JTextField titleField = new JTextField();
+        JLabel timeLabel = new JLabel("New Showtime:");
+        JTextField timeField = new JTextField();
+        JLabel seatsLabel = new JLabel("New Available Seats:");
+        JTextField seatsField = new JTextField();
 
-        JLabel newTimeLabel = new JLabel("New Showtime:");
-        JTextField newTimeField = new JTextField();
+        // Pre-fill current movie data
+        for (Movie m : movieList) {
+            if (m.getTitle().equalsIgnoreCase(movieTitle)) {
+                titleField.setText(m.getTitle());
+                timeField.setText(m.getShowtime());
+                seatsField.setText(String.valueOf(m.getSeatsAvailable()));
+                break;
+            }
+        }
 
-        JLabel newSeatsLabel = new JLabel("New Seats:");
-        JTextField newSeatsField = new JTextField();
-
-        JButton modifyBtn = new JButton("Update");
+        // Buttons
+        JButton updateBtn = new JButton("Update");
         JButton cancelBtn = new JButton("Cancel");
 
-        modifyBtn.addActionListener(e -> {
-            String title = titleField.getText();
-            String newTime = newTimeField.getText();
+        updateBtn.addActionListener(e -> {
+            String newTitle = titleField.getText().trim();
+            String newShowtime = timeField.getText().trim();
             try {
-                int newSeats = Integer.parseInt(newSeatsField.getText());
-                boolean updated = false;
+                int newSeats = Integer.parseInt(seatsField.getText().trim());
 
                 for (Movie m : movieList) {
-                    if (m.getTitle().equalsIgnoreCase(title)) {
-                        m.setShowtime(newTime);
+                    if (m.getTitle().equalsIgnoreCase(movieTitle)) {
+                        m.setTitle(newTitle.isEmpty() ? m.getTitle() : newTitle);
+                        m.setShowtime(newShowtime.isEmpty() ? m.getShowtime() : newShowtime);
                         m.setSeatsAvailable(newSeats);
-                        updated = true;
                         break;
                     }
                 }
 
-                if (updated) {
-                    JOptionPane.showMessageDialog(this, "Movie updated!");
-                    dispose();
-                } else {
-                    JOptionPane.showMessageDialog(this, "Movie not found.");
-                }
+                manageMovieWindow.refreshTable();  // Refresh the table after updating
+                JOptionPane.showMessageDialog(this, "Movie updated!");
+                dispose();
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(this, "Invalid number for seats. Please enter a valid integer.");
             } catch (Exception ex) {
-                JOptionPane.showMessageDialog(this, "Invalid input.");
+                JOptionPane.showMessageDialog(this, "Something went wrong. Please try again.");
             }
         });
 
         cancelBtn.addActionListener(e -> dispose());
 
-        add(titleLabel); add(titleField);
-        add(newTimeLabel); add(newTimeField);
-        add(newSeatsLabel); add(newSeatsField);
-        add(modifyBtn); add(cancelBtn);
+        add(titleLabel);
+        add(titleField);
+        add(timeLabel);
+        add(timeField);
+        add(seatsLabel);
+        add(seatsField);
+        add(updateBtn);
+        add(cancelBtn);
     }
 }

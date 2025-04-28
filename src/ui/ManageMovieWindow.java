@@ -39,8 +39,15 @@ public class ManageMovieWindow extends JFrame {
         JButton exitBtn = new JButton("Exit");
 
         modifyBtn.addActionListener(e -> {
-            new ModifyMovieWindow(movieList).setVisible(true);
+            int selectedRow = table.getSelectedRow();
+            if (selectedRow != -1) {
+                String selectedTitle = (String) tableModel.getValueAt(selectedRow, 0);  // get selected movie title
+                new ModifyMovieWindow(movieList, this, selectedTitle).setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(this, "Please select a movie to modify.");
+            }
         });
+        
 
         removeBtn.addActionListener(e -> {
             int selectedRow = table.getSelectedRow();
@@ -52,8 +59,9 @@ public class ManageMovieWindow extends JFrame {
         });
 
         addBtn.addActionListener(e -> {
-            new AddMovieWindow(movieList).setVisible(true);
+            new AddMovieWindow(movieList, this).setVisible(true);
         });
+        
 
         viewUsersBtn.addActionListener(e -> {
             new ViewUsersWindow(userList).setVisible(true);
@@ -74,7 +82,7 @@ public class ManageMovieWindow extends JFrame {
         add(buttonPanel, BorderLayout.SOUTH);
     }
 
-    private void refreshTable() {
+    public void refreshTable() {
         tableModel.setRowCount(0);
         for (Movie m : movieList) {
             tableModel.addRow(new Object[]{m.getTitle(), m.getShowtime(), m.getSeatsAvailable()});
