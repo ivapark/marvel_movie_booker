@@ -33,6 +33,10 @@ public class Movie {
         this.seatsAvailable = seatsAvailable;
     }
 
+    public void setTitle(String title) {
+        this.title = title;
+    }    
+
     public boolean bookSeat() {
         if (seatsAvailable > 0) {
             seatsAvailable--;
