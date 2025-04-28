@@ -10,12 +10,16 @@ public class Booking {
     public Booking(Movie movie, int seats) {
         this.movie = movie;
         this.seats = seats;
-        this.paid = true; // assume always paid for now
+        this.paid = true;
     }
 
     public Movie getMovie() { return movie; }
     public int getSeats() { return seats; }
     public boolean isPaid() { return paid; }
+
+    public void setSeats(int seats) {
+        this.seats = seats;
+    }
 
     @Override
     public String toString() {

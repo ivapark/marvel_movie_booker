@@ -1,6 +1,7 @@
 package ui;
 
 import model.Movie;
+import model.User;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -9,9 +10,11 @@ import java.util.List;
 
 public class ViewRevenueWindow extends JFrame {
     private List<Movie> movieList;
+    private List<User> userList;
 
-    public ViewRevenueWindow(List<Movie> movieList) {
+    public ViewRevenueWindow(List<Movie> movieList, List<User> userList) {
         this.movieList = movieList;
+        this.userList = userList;
 
         setTitle("View Revenue");
         setSize(600, 400);
@@ -29,8 +32,7 @@ public class ViewRevenueWindow extends JFrame {
         JButton exitBtn = new JButton("Exit");
         exitBtn.addActionListener(e -> {
             this.dispose();
-            // You could choose to go back to AdminMenu if you want
-            // new AdminMenu(movieList, userList).setVisible(true);
+            new AdminMenu(movieList, userList).setVisible(true); 
         });
 
         JPanel bottomPanel = new JPanel();
@@ -42,14 +44,13 @@ public class ViewRevenueWindow extends JFrame {
 
     private void refreshTable(DefaultTableModel tableModel) {
         for (Movie movie : movieList) {
-            int totalSeats = getInitialSeats(movie.getTitle()); // assume each movie had fixed initial seats
+            int totalSeats = getInitialSeats(movie.getTitle());
             int soldSeats = totalSeats - movie.getSeatsAvailable();
             int revenue = soldSeats * getTicketPrice(movie.getTitle());
             tableModel.addRow(new Object[]{movie.getTitle(), soldSeats, "$" + revenue});
         }
     }
 
-    // Assume starting seats were always 50, you can adjust this logic if needed
     private int getInitialSeats(String title) {
         switch (title) {
             case "Iron Man":
@@ -72,12 +73,11 @@ public class ViewRevenueWindow extends JFrame {
             case "Ant-Man and the Wasp":
                 return 28;
             default:
-                return 50; // default
+                return 50;
         }
     }
 
-    // Assume ticket price fixed, or vary if you want
     private int getTicketPrice(String title) {
-        return 10; // e.g., $10 per ticket
+        return 10;
     }
 }

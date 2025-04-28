@@ -28,7 +28,11 @@ public class MainMenu extends JFrame {
         JButton adminBtn = new JButton("Login as Admin");
         JButton exitBtn = new JButton("Exit");
 
-        customerBtn.addActionListener(e -> new CustomerMenu(movieList, userList).setVisible(true));
+        customerBtn.addActionListener(e -> {
+            this.dispose();  
+            new CustomerMenu(movieList, userList).setVisible(true);
+        });
+
         adminBtn.addActionListener(e -> {
             String password = JOptionPane.showInputDialog(this, "Enter Admin Password:");
             if (auth.Admin.authenticate(password)) {
