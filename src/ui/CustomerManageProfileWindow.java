@@ -7,7 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
-public class CustomersManageProfileWindow extends JFrame {
+public class CustomerManageProfileWindow extends JFrame {
     private List<Movie> movieList;
     private List<User> userList;
     private User currentUser;
@@ -15,7 +15,7 @@ public class CustomersManageProfileWindow extends JFrame {
     private JTextField nameField;
     private JTextField emailField;
 
-    public CustomersManageProfileWindow(List<Movie> movieList, List<User> userList, User currentUser) {
+    public CustomerManageProfileWindow(List<Movie> movieList, List<User> userList, User currentUser) {
         this.movieList = movieList;
         this.userList = userList;
         this.currentUser = currentUser;
