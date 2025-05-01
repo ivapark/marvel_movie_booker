@@ -41,12 +41,12 @@ public class CustomerBrowseMoviesWindow extends JFrame {
         JPanel bottomPanel = new JPanel();
         bottomPanel.setLayout(new GridLayout(4, 1, 10, 10));
 
-        JButton viewChronoBtn = new JButton("View Chronological Order");
+        JButton viewAlphaBtn = new JButton("View Alphabetical Order");
         JButton viewByTimeBtn = new JButton("View by Time");
         JButton bookTicketBtn = new JButton("Book a Ticket");
         JButton exitBtn = new JButton("Exit");
 
-        viewChronoBtn.addActionListener(e -> {
+        viewAlphaBtn.addActionListener(e -> {
             sortMoviesByTitle();
             populateTable();
         });
@@ -65,7 +65,7 @@ public class CustomerBrowseMoviesWindow extends JFrame {
 
             String selectedTitle = (String) tableModel.getValueAt(selectedRow, 0);
             Movie selectedMovie = movieList.stream()
-                    .filter(m -> m.getTitle().equals(selectedTitle))
+                    .filter(m -> m.getTitle().equalsIgnoreCase(selectedTitle))
                     .findFirst()
                     .orElse(null);
 
@@ -82,7 +82,7 @@ public class CustomerBrowseMoviesWindow extends JFrame {
             new CustomerMenu(movieList, userList).setVisible(true);
         });
 
-        bottomPanel.add(viewChronoBtn);
+        bottomPanel.add(viewAlphaBtn);
         bottomPanel.add(viewByTimeBtn);
         bottomPanel.add(bookTicketBtn);
         bottomPanel.add(exitBtn);
@@ -98,7 +98,7 @@ public class CustomerBrowseMoviesWindow extends JFrame {
     }
 
     private void sortMoviesByTitle() {
-        Collections.sort(movieList, Comparator.comparing(Movie::getTitle));
+        Collections.sort(movieList, Comparator.comparing(m -> m.getTitle().toLowerCase()));
     }
 
     private void sortMoviesByTime() {
@@ -106,12 +106,25 @@ public class CustomerBrowseMoviesWindow extends JFrame {
 
         Collections.sort(movieList, (m1, m2) -> {
             try {
-                LocalTime time1 = LocalTime.parse(m1.getShowtime(), formatter);
-                LocalTime time2 = LocalTime.parse(m2.getShowtime(), formatter);
+                String t1 = normalizeTime(m1.getShowtime());
+                String t2 = normalizeTime(m2.getShowtime());
+                LocalTime time1 = LocalTime.parse(t1, formatter);
+                LocalTime time2 = LocalTime.parse(t2, formatter);
                 return time1.compareTo(time2);
             } catch (DateTimeParseException e) {
                 return 0;
             }
         });
+    }
+
+    private String normalizeTime(String time) {
+        time = time.trim().toUpperCase();
+        if (!time.contains("AM") && !time.contains("PM")) {
+            return time;
+        }
+        if (!time.contains(" ")) {
+            time = time.replace("AM", " AM").replace("PM", " PM");
+        }
+        return time;
     }
 }
