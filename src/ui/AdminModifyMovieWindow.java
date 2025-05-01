@@ -6,12 +6,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
-public class ModifyMovieWindow extends JFrame {
+public class AdminModifyMovieWindow extends JFrame {
     private List<Movie> movieList;
-    private ManageMovieWindow manageMovieWindow;
+    private AdminManageMovieWindow manageMovieWindow;
     private String movieTitle;
 
-    public ModifyMovieWindow(List<Movie> movieList, ManageMovieWindow manageMovieWindow, String movieTitle) {
+    public AdminModifyMovieWindow(List<Movie> movieList, AdminManageMovieWindow manageMovieWindow, String movieTitle) {
         this.movieList = movieList;
         this.manageMovieWindow = manageMovieWindow;
         this.movieTitle = movieTitle;

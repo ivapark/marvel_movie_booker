@@ -8,11 +8,11 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.util.List;
 
-public class ViewUsersWindow extends JFrame {
+public class AdminViewUsersWindow extends JFrame {
     private List<User> userList;
     private DefaultTableModel tableModel;
 
-    public ViewUsersWindow(List<User> userList) {
+    public AdminViewUsersWindow(List<User> userList) {
         this.userList = userList;
 
         setTitle("Registered Users");
