@@ -2,7 +2,7 @@
 
 ## Project Overview
 The Marvel Movie Ticket Booking System is a GUI-based Java application that allows customers to browse Marvel movies, book and cancel tickets, and manage their user profiles.  
-Admins can add, modify, and delete movies, view registered users, and track revenue per movie.
+Admins can add, modify, delete movies, view registered users, and track revenue per movie.
 
 The system uses Java for the GUI, and object oriented programming to save and load movie, booking, and user data across sessions.
 
@@ -12,9 +12,9 @@ The system uses Java for the GUI, and object oriented programming to save and lo
 
 ### Customers
 - Browse released Marvel movies (by title or showtime)
-- Book movie tickets (choose movie, seats, and see amount)
+- Book movie tickets (choose movie, seats, and see amount owed to pay)
 - View, modify, or cancel existing bookings
-- Create, update, or delete user profile
+- Create or update user profile
 
 ### Admins
 - Add new Marvel movies with title, showtime, seats, and price
@@ -30,7 +30,7 @@ The system uses Java for the GUI, and object oriented programming to save and lo
 ### Step 1: Compile
 
 ```bash
-javac -d out $(find src -name "*.java")
+javac -d ../out $(find . -name "*.java")
 ```
 - This compiles all Java source files from `src/` into `out/`
 
@@ -39,25 +39,9 @@ javac -d out $(find src -name "*.java")
 ### Step 2: Run
 
 ```bash
-java -cp out src.Main
+java -cp ../out Main    
 ```
 - This runs the application starting from the `Main.java` class
-
----
-
-## Data Persistence
-- The application automatically saves:
-  - Movie list → `movies.ser`
-  - User list → `users.ser`
-- Data will persist across sessions even after closing the program.
-
----
-
-## Technologies Used
-- Java 17
-- Java Swing (GUI)
-- Object-Oriented Programming (OOP)
-- Object Serialization for file storage
 
 ---
 
@@ -67,13 +51,8 @@ java -cp out src.Main
 
 ---
 
-## Screenshots (Optional)
-> You can add GUI screenshots here if needed before submission!
-
----
-
 ## Notes
-- Admin features require password authentication (can be extended in future versions).
+- Admin features require password authentication (PW: marvel123)
 - Input validation (e.g., no negative seats) should be added for production version.
 - Project designed as part of NYU Object-Oriented Programming course.
 
