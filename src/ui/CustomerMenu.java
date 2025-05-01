@@ -28,7 +28,7 @@ public class CustomerMenu extends JFrame {
 
         browseBtn.addActionListener(e -> {
             this.dispose();  
-            new BrowseMoviesWindow(movieList, userList).setVisible(true);
+            new CustomerBrowseMoviesWindow(movieList, userList).setVisible(true);
         });
 
         viewTicketBtn.addActionListener(e -> {
@@ -59,7 +59,7 @@ public class CustomerMenu extends JFrame {
         
                 if (currentUser != null) {
                     this.dispose();
-                    new ManageProfileWindow(movieList, userList, currentUser).setVisible(true);
+                    new CustomersManageProfileWindow(movieList, userList, currentUser).setVisible(true);
                 } else {
                     JOptionPane.showMessageDialog(this, "User not found.");
                 }

@@ -13,13 +13,13 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
-public class BrowseMoviesWindow extends JFrame {
+public class CustomerBrowseMoviesWindow extends JFrame {
     private List<Movie> movieList;
     private List<User> userList;
     private JTable movieTable;
     private DefaultTableModel tableModel;
 
-    public BrowseMoviesWindow(List<Movie> movieList, List<User> userList) {
+    public CustomerBrowseMoviesWindow(List<Movie> movieList, List<User> userList) {
         this.movieList = movieList;
         this.userList = userList;
 
@@ -59,7 +59,7 @@ public class BrowseMoviesWindow extends JFrame {
 
         bookTicketBtn.addActionListener(e -> {
             this.dispose();
-            new BookTicketWindow(movieList, userList).setVisible(true);
+            new CustomersBookTicketWindow(movieList, userList).setVisible(true);
         });
 
         exitBtn.addActionListener(e -> {

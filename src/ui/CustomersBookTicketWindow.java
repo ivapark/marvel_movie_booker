@@ -8,7 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
-public class BookTicketWindow extends JFrame {
+public class CustomersBookTicketWindow extends JFrame {
     private List<Movie> movieList;
     private List<User> userList;
     private Movie selectedMovie;
@@ -18,14 +18,14 @@ public class BookTicketWindow extends JFrame {
     private JTextField emailField;
     private JTextField priceField;
 
-    public BookTicketWindow(List<Movie> movieList, List<User> userList) {
+    public CustomersBookTicketWindow(List<Movie> movieList, List<User> userList) {
         this.movieList = movieList;
         this.userList = userList;
 
         // Select Movie First
         selectedMovie = selectMovieDialog();
         if (selectedMovie == null) {
-            new BrowseMoviesWindow(movieList, userList).setVisible(true);
+            new CustomerBrowseMoviesWindow(movieList, userList).setVisible(true);
             dispose();
             return;
         }
@@ -135,7 +135,7 @@ public class BookTicketWindow extends JFrame {
         // Exit Button Action
         exitBtn.addActionListener(e -> {
             this.dispose();
-            new BrowseMoviesWindow(movieList, userList).setVisible(true);
+            new CustomerBrowseMoviesWindow(movieList, userList).setVisible(true);
         });
     }
 
