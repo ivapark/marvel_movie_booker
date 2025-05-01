@@ -6,11 +6,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
-public class AddMovieWindow extends JFrame {
+public class AdminAddMovieWindow extends JFrame {
     private List<Movie> movieList;
-    private ManageMovieWindow manageMovieWindow;
+    private AdminManageMovieWindow manageMovieWindow;
 
-    public AddMovieWindow(List<Movie> movieList, ManageMovieWindow manageMovieWindow) {
+    public AdminAddMovieWindow(List<Movie> movieList, AdminManageMovieWindow manageMovieWindow) {
         this.movieList = movieList;
         this.manageMovieWindow = manageMovieWindow;
 

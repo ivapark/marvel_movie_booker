@@ -7,15 +7,15 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.util.List;
-import ui.ViewUsersWindow; 
+import ui.AdminViewUsersWindow; 
 
-public class ManageMovieWindow extends JFrame {
+public class AdminManageMovieWindow extends JFrame {
     private DefaultTableModel tableModel;
     private JTable table;
     private List<Movie> movieList;
     private List<User> userList;
 
-    public ManageMovieWindow(List<Movie> movieList, List<User> userList) {
+    public AdminManageMovieWindow(List<Movie> movieList, List<User> userList) {
         this.movieList = movieList;
         this.userList = userList;
 
@@ -42,7 +42,7 @@ public class ManageMovieWindow extends JFrame {
             int selectedRow = table.getSelectedRow();
             if (selectedRow != -1) {
                 String selectedTitle = (String) tableModel.getValueAt(selectedRow, 0);  // get selected movie title
-                new ModifyMovieWindow(movieList, this, selectedTitle).setVisible(true);
+                new AdminModifyMovieWindow(movieList, this, selectedTitle).setVisible(true);
             } else {
                 JOptionPane.showMessageDialog(this, "Please select a movie to modify.");
             }
@@ -59,12 +59,12 @@ public class ManageMovieWindow extends JFrame {
         });
 
         addBtn.addActionListener(e -> {
-            new AddMovieWindow(movieList, this).setVisible(true);
+            new AdminAddMovieWindow(movieList, this).setVisible(true);
         });
         
 
         viewUsersBtn.addActionListener(e -> {
-            new ViewUsersWindow(userList).setVisible(true);
+            new AdminViewUsersWindow(userList).setVisible(true);
         });
 
         exitBtn.addActionListener(e -> {
