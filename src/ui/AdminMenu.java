@@ -21,7 +21,7 @@ public class AdminMenu extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new GridLayout(3, 1, 10, 10)); 
 
-        JButton manageMoviesBtn = new JButton("Manage Movie");
+        JButton manageMoviesBtn = new JButton("Browse Movie");
         JButton viewRevenueBtn = new JButton("View Revenue");
         JButton exitBtn = new JButton("Exit");
 
