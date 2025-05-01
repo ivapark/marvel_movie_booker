@@ -10,10 +10,10 @@ import java.awt.*;
 import java.util.List;
 
 
-public class AdminBrowseWindow extends JFrame {
+public class AdminRemoveMovie extends JFrame {
     private DefaultTableModel tableModel;
 
-    public AdminBrowseWindow(List<Movie> movieList) {
+    public AdminRemoveMovie(List<Movie> movieList) {
         setTitle("Browse Movies");
         setSize(500, 300);
         setLocationRelativeTo(null);
