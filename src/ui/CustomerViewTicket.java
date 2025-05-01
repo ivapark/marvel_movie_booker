@@ -13,15 +13,14 @@ public class CustomerViewTicket extends JFrame {
     private List<User> userList;
     private User currentUser;
 
+    private JComboBox<String> bookingSelector;
     private JLabel titleLabel;
     private JLabel showtimeLabel;
     private JLabel seatsLabel;
     private JLabel priceLabel;
 
-    private Booking booking;
-    private Movie movie;
+    private Booking currentBooking;
 
-    // --- Static method to open ticket safely ---
     public static void openTicket(List<Movie> movieList, List<User> userList, User currentUser) {
         if (currentUser.getBookings().isEmpty()) {
             JOptionPane.showMessageDialog(null, "No bookings found.");
@@ -36,17 +35,33 @@ public class CustomerViewTicket extends JFrame {
         this.userList = userList;
         this.currentUser = currentUser;
 
-        setTitle("View My Ticket");
-        setSize(400, 350);
+        setTitle("View My Tickets");
+        setSize(450, 400);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLayout(new BorderLayout(10, 10));
 
-        JLabel heading = new JLabel("My Ticket: Movie Title, Showtime", SwingConstants.CENTER);
+        JLabel heading = new JLabel("My Tickets", SwingConstants.CENTER);
         heading.setFont(new Font("Arial", Font.BOLD, 16));
         add(heading, BorderLayout.NORTH);
 
-        // Center Panel
+        // Booking selection dropdown
+        bookingSelector = new JComboBox<>();
+        for (Booking b : currentUser.getBookings()) {
+            bookingSelector.addItem(b.getMovie().getTitle() + " @ " + b.getMovie().getShowtime());
+        }
+
+        bookingSelector.addActionListener(e -> {
+            int index = bookingSelector.getSelectedIndex();
+            if (index >= 0) {
+                currentBooking = currentUser.getBookings().get(index);
+                updateTicketInfo();
+            }
+        });
+
+        add(bookingSelector, BorderLayout.NORTH);
+
+        // Ticket Info Display
         JPanel infoPanel = new JPanel(new GridLayout(4, 2, 10, 10));
 
         infoPanel.add(new JLabel("Title:"));
@@ -68,48 +83,52 @@ public class CustomerViewTicket extends JFrame {
         add(infoPanel, BorderLayout.CENTER);
 
         // Bottom Buttons
-        JPanel buttonPanel = new JPanel(new FlowLayout());
+        JPanel buttonPanel = new JPanel();
 
         JButton cancelBtn = new JButton("Cancel Reservation");
         JButton exitBtn = new JButton("Exit");
+
+        cancelBtn.addActionListener(e -> cancelBooking());
+        exitBtn.addActionListener(e -> {
+            this.dispose();
+            new CustomerMenu(movieList, userList).setVisible(true);
+        });
 
         buttonPanel.add(cancelBtn);
         buttonPanel.add(exitBtn);
 
         add(buttonPanel, BorderLayout.SOUTH);
 
-        loadTicketInfo();
-
-        // --- Button Behavior ---
-        cancelBtn.addActionListener(e -> cancelBooking());
-        exitBtn.addActionListener(e -> {
-            this.dispose();
-            new CustomerMenu(movieList, userList).setVisible(true);
-        });
+        // Load initial selection
+        bookingSelector.setSelectedIndex(0);
     }
 
-    private void loadTicketInfo() {
-        booking = currentUser.getBookings().get(0);
-        movie = booking.getMovie();
-
+    private void updateTicketInfo() {
+        Movie movie = currentBooking.getMovie();
         titleLabel.setText(movie.getTitle());
         showtimeLabel.setText(movie.getShowtime());
-        seatsLabel.setText(String.valueOf(booking.getSeats()));
-        priceLabel.setText("$" + (booking.getSeats() * movie.getTicketPrice()));
+        seatsLabel.setText(String.valueOf(currentBooking.getSeats()));
+        priceLabel.setText("$" + (currentBooking.getSeats() * movie.getTicketPrice()));
     }
 
     private void cancelBooking() {
-        if (!currentUser.getBookings().isEmpty()) {
-            Booking removedBooking = currentUser.getBookings().remove(0);
-            removedBooking.getMovie().setSeatsAvailable(
-                removedBooking.getMovie().getSeatsAvailable() + removedBooking.getSeats()
+        if (currentBooking != null) {
+            currentBooking.getMovie().setSeatsAvailable(
+                currentBooking.getMovie().getSeatsAvailable() + currentBooking.getSeats()
             );
+            currentUser.getBookings().remove(currentBooking);
 
             JOptionPane.showMessageDialog(this, "Reservation cancelled.");
-        } else {
-            JOptionPane.showMessageDialog(this, "No booking to cancel.");
+
+            if (currentUser.getBookings().isEmpty()) {
+                this.dispose();
+                new CustomerMenu(movieList, userList).setVisible(true);
+            } else {
+                bookingSelector.removeItemAt(bookingSelector.getSelectedIndex());
+                if (bookingSelector.getItemCount() > 0) {
+                    bookingSelector.setSelectedIndex(0);
+                }
+            }
         }
-        this.dispose();
-        new CustomerMenu(movieList, userList).setVisible(true);
     }
 }
