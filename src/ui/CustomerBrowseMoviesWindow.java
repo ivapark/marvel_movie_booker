@@ -6,12 +6,12 @@ import model.User;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 public class CustomerBrowseMoviesWindow extends JFrame {
     private List<Movie> movieList;
@@ -33,7 +33,6 @@ public class CustomerBrowseMoviesWindow extends JFrame {
         String[] columns = { "Title", "Showtime", "Available Seats" };
         tableModel = new DefaultTableModel(columns, 0);
         movieTable = new JTable(tableModel);
-
         populateTable();
 
         add(new JScrollPane(movieTable), BorderLayout.CENTER);
@@ -58,8 +57,24 @@ public class CustomerBrowseMoviesWindow extends JFrame {
         });
 
         bookTicketBtn.addActionListener(e -> {
-            this.dispose();
-            new CustomersBookTicketWindow(movieList, userList).setVisible(true);
+            int selectedRow = movieTable.getSelectedRow();
+            if (selectedRow == -1) {
+                JOptionPane.showMessageDialog(this, "Please select a movie from the table.");
+                return;
+            }
+
+            String selectedTitle = (String) tableModel.getValueAt(selectedRow, 0);
+            Movie selectedMovie = movieList.stream()
+                    .filter(m -> m.getTitle().equals(selectedTitle))
+                    .findFirst()
+                    .orElse(null);
+
+            if (selectedMovie != null) {
+                this.dispose();
+                new CustomerBookTicketWindow(movieList, userList, selectedMovie).setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(this, "Selected movie not found.");
+            }
         });
 
         exitBtn.addActionListener(e -> {
@@ -76,7 +91,7 @@ public class CustomerBrowseMoviesWindow extends JFrame {
     }
 
     private void populateTable() {
-        tableModel.setRowCount(0); 
+        tableModel.setRowCount(0);
         for (Movie m : movieList) {
             tableModel.addRow(new Object[] { m.getTitle(), m.getShowtime(), m.getSeatsAvailable() });
         }
@@ -95,7 +110,7 @@ public class CustomerBrowseMoviesWindow extends JFrame {
                 LocalTime time2 = LocalTime.parse(m2.getShowtime(), formatter);
                 return time1.compareTo(time2);
             } catch (DateTimeParseException e) {
-                return 0; 
+                return 0;
             }
         });
     }

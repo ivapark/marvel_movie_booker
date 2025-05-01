@@ -59,7 +59,7 @@ public class CustomerMenu extends JFrame {
         
                 if (currentUser != null) {
                     this.dispose();
-                    new CustomersManageProfileWindow(movieList, userList, currentUser).setVisible(true);
+                    new CustomerManageProfileWindow(movieList, userList, currentUser).setVisible(true);
                 } else {
                     JOptionPane.showMessageDialog(this, "User not found.");
                 }
