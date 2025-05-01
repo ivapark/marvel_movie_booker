@@ -23,7 +23,7 @@ public class CustomerMenu extends JFrame {
 
         JButton browseBtn = new JButton("Browse Movies");
         JButton viewTicketBtn = new JButton("View My Ticket");
-        JButton manageProfileBtn = new JButton("Manage Profile");
+        JButton updateProfileBtn = new JButton("Update Profile");
         JButton exitBtn = new JButton("Exit");
 
         browseBtn.addActionListener(e -> {
@@ -49,8 +49,8 @@ public class CustomerMenu extends JFrame {
         });
         
 
-        manageProfileBtn.addActionListener(e -> {
-            String email = JOptionPane.showInputDialog(this, "Enter your email to manage profile:");
+        updateProfileBtn.addActionListener(e -> {
+            String email = JOptionPane.showInputDialog(this, "Enter your email to update profile:");
             if (email != null) {
                 User currentUser = userList.stream()
                         .filter(u -> u.getEmail().equalsIgnoreCase(email))
@@ -75,7 +75,7 @@ public class CustomerMenu extends JFrame {
 
         add(browseBtn);
         add(viewTicketBtn);
-        add(manageProfileBtn);
+        add(updateProfileBtn);
         add(exitBtn);
     }
 }
