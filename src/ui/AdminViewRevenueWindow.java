@@ -8,11 +8,11 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.util.List;
 
-public class ViewRevenueWindow extends JFrame {
+public class AdminViewRevenueWindow extends JFrame {
     private List<Movie> movieList;
     private List<User> userList;
 
-    public ViewRevenueWindow(List<Movie> movieList, List<User> userList) {
+    public AdminViewRevenueWindow(List<Movie> movieList, List<User> userList) {
         this.movieList = movieList;
         this.userList = userList;
 
