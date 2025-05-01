@@ -8,9 +8,9 @@ import java.util.List;
 
 public class AdminAddMovieWindow extends JFrame {
     private List<Movie> movieList;
-    private AdminManageMovieWindow manageMovieWindow;
+    private AdminBrowseMovieWindow manageMovieWindow;
 
-    public AdminAddMovieWindow(List<Movie> movieList, AdminManageMovieWindow manageMovieWindow) {
+    public AdminAddMovieWindow(List<Movie> movieList, AdminBrowseMovieWindow manageMovieWindow) {
         this.movieList = movieList;
         this.manageMovieWindow = manageMovieWindow;
 

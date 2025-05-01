@@ -9,13 +9,13 @@ import java.awt.*;
 import java.util.List;
 import ui.AdminViewUsersWindow; 
 
-public class AdminManageMovieWindow extends JFrame {
+public class AdminBrowseMovieWindow extends JFrame {
     private DefaultTableModel tableModel;
     private JTable table;
     private List<Movie> movieList;
     private List<User> userList;
 
-    public AdminManageMovieWindow(List<Movie> movieList, List<User> userList) {
+    public AdminBrowseMovieWindow(List<Movie> movieList, List<User> userList) {
         this.movieList = movieList;
         this.userList = userList;
 
