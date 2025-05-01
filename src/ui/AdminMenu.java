@@ -27,7 +27,7 @@ public class AdminMenu extends JFrame {
 
         manageMoviesBtn.addActionListener(e -> {
             this.dispose();
-            new AdminManageMovieWindow(movieList, userList).setVisible(true);
+            new AdminBrowseMovieWindow(movieList, userList).setVisible(true);
         });
 
         viewRevenueBtn.addActionListener(e -> {

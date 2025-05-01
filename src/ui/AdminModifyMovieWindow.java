@@ -8,10 +8,10 @@ import java.util.List;
 
 public class AdminModifyMovieWindow extends JFrame {
     private List<Movie> movieList;
-    private AdminManageMovieWindow manageMovieWindow;
+    private AdminBrowseMovieWindow manageMovieWindow;
     private String movieTitle;
 
-    public AdminModifyMovieWindow(List<Movie> movieList, AdminManageMovieWindow manageMovieWindow, String movieTitle) {
+    public AdminModifyMovieWindow(List<Movie> movieList, AdminBrowseMovieWindow manageMovieWindow, String movieTitle) {
         this.movieList = movieList;
         this.manageMovieWindow = manageMovieWindow;
         this.movieTitle = movieTitle;
