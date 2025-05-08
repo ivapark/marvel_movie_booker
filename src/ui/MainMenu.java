@@ -24,7 +24,7 @@ public class MainMenu extends JFrame {
         setLocationRelativeTo(null);
         setLayout(new GridLayout(3, 1, 10, 10));
 
-        JButton customerBtn = new JButton("Login as Customer");
+        JButton customerBtn = new JButton("Enter as Customer");
         JButton adminBtn = new JButton("Login as Admin");
         JButton exitBtn = new JButton("Exit");
 
